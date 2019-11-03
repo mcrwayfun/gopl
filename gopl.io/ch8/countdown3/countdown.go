@@ -22,6 +22,7 @@ func main() {
 			// Do nothing.
 			// 当main goroutine结束时，tick依旧试图向channel中发送数据，但此时
 			// 已经没有goroutine会从该channel中接送值了，这会造成goroutine泄漏
+			break
 		case <-abort:
 			fmt.Println("Launch aborted!")
 			return
