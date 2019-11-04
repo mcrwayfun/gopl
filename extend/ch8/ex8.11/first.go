@@ -39,5 +39,6 @@ func main() {
 	for name, vals := range resp.Header {
 		fmt.Printf("%s: %s\n", name, strings.Join(vals, ","))
 	}
+
 	wg.Wait()
 }
