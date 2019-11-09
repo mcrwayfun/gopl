@@ -27,14 +27,12 @@ func New(f Func) *Memo {
 }
 
 func (memo *Memo) Get(key string) (value interface{}, err error) {
-	memo.mu.Lock()
-	res, ok := memo.cache[key]
+	memo.mu.Lock()             // 获取互斥锁
+	res, ok := memo.cache[key] // 查询map是否存在指定条目
 	memo.mu.Unlock()
 	if !ok {
 		res.value, res.err = memo.f(key)
 
-		// Between the two critical sections, several goroutines
-		// may race to compute f(key) and update the map.
 		memo.mu.Lock()
 		memo.cache[key] = res
 		memo.mu.Unlock()
